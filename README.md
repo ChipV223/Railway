@@ -1,2 +1,2 @@
 # Railway
-Test Railway Project
+Test Railway Project to stream logs from a Railway deployment to a text file
