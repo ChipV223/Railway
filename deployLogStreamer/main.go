@@ -9,9 +9,14 @@ import (
 
 func main() {
 
+	fmt.Println("Provide the name & save location for your Railway deployment logs: ")
+	var logFile string
+
+	fmt.Scanln(&logFile)
+
 	cmd1 := exec.Command("railway", "up")
 	fmt.Println("Railway Up Command Executed..")
-	outfile, err := os.Create("/path/to/log/directory/log.txt")
+	outfile, err := os.Create(logFile)
 	if err != nil {
 		panic(err)
 	}
@@ -29,7 +34,7 @@ func main() {
 
 	cmd2 := exec.Command("railway", "logs", "-b")
 	fmt.Println("Railway Up Command Completed. Starting Railway Deployment..")
-	outfile2, err := os.OpenFile("/path/to/log/directory/log.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0777)
+	outfile2, err := os.OpenFile(logFile, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0777)
 	if err != nil {
 		panic(err)
 	}
@@ -47,7 +52,7 @@ func main() {
 
 	cmd3 := exec.Command("railway", "logs", "-d")
 	fmt.Println("Railway Deployment Completed. Just Finishing Up and Gatering the Logs...")
-	outfile3, err := os.OpenFile("/path/to/log/directory/log.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0777)
+	outfile3, err := os.OpenFile(logFile, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0777)
 	if err != nil {
 		panic(err)
 	}
