@@ -1,5 +1,5 @@
 # Railway Deployment Log Streamer
-GO Project that stream logs from an active Railway deployment into a text file created locally
+GO Project that stream logs from an active Railway deployment into a text file created & saved locally
 
 ## Introduction
 
@@ -29,7 +29,8 @@ You can then open the file and watch it fill up with logging information about t
 
 ## Code Breakdown
 
-At the start of main.go, the user gets a prompt to supply the directory location and name of the file that will save the logs from the new deployment
+At the start of our GO program and before the Railway deployment starts, there's first a prompt requesting the user to provide the directory location and name of the file that will 
+save the logs from the upcoming deployment.
 
 ```
 fmt.Println("Provide the name & save location for your Railway deployment logs: ")
@@ -37,9 +38,10 @@ var logFile string
 fmt.Scanln(&logFile)
 ```
 
-Then the program executes the first Railway CLI command, `railway up`, which starts the Railway deployment and in turn creates the log file based on the answer from the prompt 
-and adds the logging from the command to the new file. We include some error handling to insure if the command and/or the creating of the log file fails in addition making sure to close the file 
-once the output from the command has been added.
+Then the program executes the first Railway CLI command, `railway up`, which starts the Railway deployment process and in turn creates the log file based on the answer from the 
+afromnentioned prompt and adds the logging from the command to the new file. There's error handling for the command and logfile creation to insure that if the command and/or the 
+creating of the log file fails for whatever reason, the program terminates and the error displays on the terminal window. In addition, there's code to make sure that the logfile 
+is closed for any I/O and the underlying writer buffer is flushed once the stdout from the CLI command has been added.
 
 ```
 cmd1 := exec.Command("railway", "up")
@@ -61,8 +63,8 @@ if err != nil {
 }
 ```
 
-Afterwards, the program executes the second Railway CLI command, `railway logs -b` so that the build logs of the deployment can be captured. Since the logfile is already created from the last step, 
-we tell GO to open the file and append the output from the CLI command to the file.
+Afterwards, the program executes the second Railway CLI command, `railway logs -b` so that the build logs of the deployment can be captured. Since the logfile is already created 
+from the last step, we tell GO to open the file and append the output from the CLI command to the file.
 
 ```
 cmd2 := exec.Command("railway", "logs", "-b")
