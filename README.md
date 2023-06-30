@@ -26,3 +26,85 @@ This program allows you to launch a Railway deployment from your local machine a
 
 Answer the prompt at the start of the program and you should now see a new file in the location that you provided in the prompt.
 You can then open the file and watch it fill up with logging information about the deployment pulled directly from the Railway Logs API.
+
+## Code Breakdown
+
+At the start of main.go, the user gets a prompt to supply the directory location and name of the file that will save the logs from the new deployment
+
+```
+fmt.Println("Provide the name & save location for your Railway deployment logs: ")
+var logFile string
+fmt.Scanln(&logFile)
+```
+
+Then the program executes the first Railway CLI command, `railway up`, which starts the Railway deployment and in turn creates the log file based on the answer from the prompt 
+and adds the logging from the command to the new file. We include some error handling to insure if the command and/or the creating of the log file fails in addition making sure to close the file 
+once the output from the command has been added.
+
+```
+cmd1 := exec.Command("railway", "up")
+fmt.Println("Railway Up Command Executed..")
+outfile, err := os.Create(logFile)
+if err != nil {
+	panic(err)
+}
+
+defer outfile.Close()
+cmd1.Stdout = outfile
+
+writer := bufio.NewWriter(outfile)
+defer writer.Flush()
+
+err = cmd1.Run()
+if err != nil {
+	panic(err)
+}
+```
+
+Afterwards, the program executes the second Railway CLI command, `railway logs -b` to capture the build logs of the deployment. Since the logfile is already created from the last step, we tell GO
+to open the file and append the output from the command to the file.
+
+```
+cmd2 := exec.Command("railway", "logs", "-b")
+fmt.Println("Railway Up Command Completed. Starting Railway Deployment..")
+outfile2, err := os.OpenFile(logFile, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0777)
+if err != nil {
+	panic(err)
+}
+
+defer outfile2.Close()
+cmd2.Stdout = outfile2
+
+writer = bufio.NewWriter(outfile2)
+defer writer.Flush()
+
+err = cmd2.Run()
+if err != nil {
+	panic(err)
+}
+```
+
+
+Lastly, we execute the third Railway CLI command, `railway logs -d`, to capture the deployment logs after the project has been built in Railway
+
+```
+cmd3 := exec.Command("railway", "logs", "-d")
+fmt.Println("Railway Deployment Completed. Just Finishing Up and Gatering the Logs...")
+outfile3, err := os.OpenFile(logFile, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0777)
+if err != nil {
+	panic(err)
+}
+
+defer outfile3.Close()
+cmd3.Stdout = outfile3
+
+writer = bufio.NewWriter(outfile3)
+defer writer.Flush()
+
+err = cmd3.Run()
+if err != nil {
+	panic(err)
+}
+
+fmt.Println("Log Gathering Completed..")
+```

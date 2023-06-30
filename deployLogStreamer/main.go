@@ -11,7 +11,6 @@ func main() {
 
 	fmt.Println("Provide the name & save location for your Railway deployment logs: ")
 	var logFile string
-
 	fmt.Scanln(&logFile)
 
 	cmd1 := exec.Command("railway", "up")
