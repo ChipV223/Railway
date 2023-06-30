@@ -110,3 +110,5 @@ if err != nil {
 
 fmt.Println("Log Gathering Completed..")
 ```
+
+If you have any questions or concerns with the project, feel free to contact me at chip.vaughn88@gmail.com in addition creating a new GH issue for any bug-related matters!
