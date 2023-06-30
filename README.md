@@ -25,4 +25,4 @@ This program allows you to launch a Railway deployment from your local machine a
 1. While still in the project root directory, execute the logStreamer program by specifying the path(i.e. `go run /path/to/main.go`)
 
 Answer the prompt at the start of the program and you should now see a new file in the location that you provided in the prompt.
-You can then open the file and watch it fill up with logging information about the deployment directly from the Railway Logs API.
+You can then open the file and watch it fill up with logging information about the deployment pulled directly from the Railway Logs API.
