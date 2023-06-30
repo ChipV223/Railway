@@ -61,8 +61,8 @@ if err != nil {
 }
 ```
 
-Afterwards, the program executes the second Railway CLI command, `railway logs -b` to capture the build logs of the deployment. Since the logfile is already created from the last step, we tell GO
-to open the file and append the output from the command to the file.
+Afterwards, the program executes the second Railway CLI command, `railway logs -b` so that the build logs of the deployment can be captured. Since the logfile is already created from the last step, 
+we tell GO to open the file and append the output from the CLI command to the file.
 
 ```
 cmd2 := exec.Command("railway", "logs", "-b")
