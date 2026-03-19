@@ -39,7 +39,7 @@ fmt.Scanln(&logFile)
 ```
 
 Then the program executes the first Railway CLI command, `railway up`, which starts the Railway deployment process and in turn creates the log file based on the answer from the 
-afromnentioned prompt and adds the logging from the command to the new file. There's error handling for the command and logfile creation to insure that if the command and/or the 
+afromentioned prompt and adds the logging from the command to the new file. There's error handling for the command and logfile creation to insure that if the command and/or the 
 creating of the log file fails for whatever reason, the program terminates and the error displays on the terminal window. In addition, there's code to make sure that the logfile 
 is closed for any I/O and the underlying writer buffer is flushed once the stdout from the CLI command has been added.
 
